@@ -18,10 +18,10 @@ public class NotificationService {
         String email = user.getEmail();
         NotificationDTO notificationRequestDTO = new NotificationDTO(email, message);
 
-        ResponseEntity<String> notificationResponse= restTemplate.postForEntity("https://util.devi.tools/api/v1/notify", notificationRequestDTO, String.class);
+        ResponseEntity<String> notificationResponse = restTemplate.postForEntity("https://util.devi.tools/api/v1/notify", notificationRequestDTO, String.class);
 
         if(!(notificationResponse.getStatusCode() == HttpStatus.OK)){
-            System.out.println("eroo ao enviar notificacao");
+            System.out.println("erro ao enviar notificacao");
             throw new Exception("Servico de notificacao esta Indisponivel");
 
         }
