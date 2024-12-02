@@ -31,7 +31,7 @@ public class TransactionService {
 
     public  Transaction createTransaction(TransactionDTO transaction) throws Exception {
 
-        User sender = this.userService.findUserById(transaction.sendId());
+        User sender = this.userService.findUserById(transaction.senderId());
         User receiver = this.userService.findUserById(transaction.receiverId());
 
         userService.validateTransaction(sender, transaction.value());
@@ -63,8 +63,8 @@ public class TransactionService {
     public boolean authorizeTransaction(User sender, BigDecimal value){
         ResponseEntity<Map> authorizationResponse = restTemplate.getForEntity("https://util.devi.tools/api/v2/authorize", Map.class);
         if(authorizationResponse.getStatusCode() == HttpStatus.OK) {
-            String message = (String) authorizationResponse.getBody().get("authorization");
-            return "true".equalsIgnoreCase(message);
+            String message = (String) authorizationResponse.getBody().get("status");
+            return "success".equalsIgnoreCase(message);
         } else return false;
     }
 }
